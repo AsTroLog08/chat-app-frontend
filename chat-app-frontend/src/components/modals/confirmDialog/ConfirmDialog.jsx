@@ -9,10 +9,10 @@ return (
     <>
     <div className={styles.overlay}>
       <div className={styles.modal}>
-        <h2 className={styles.title}>Підтвердження</h2>
+        <h2 className={styles.title}>Confirmation</h2>
 
         <p className={styles.text}>
-          Ви впевнені, що хочете видалити чат з <strong>{chatName}</strong>?
+          Are you sure you want to delete the chat from <strong>{chatName}</strong>?
         </p>
 
         <div className={styles.buttons}>
@@ -21,7 +21,7 @@ return (
             onClick={onClose}
             className={styles.cancelBtn}
           >
-            Скасувати
+            Cancel
           </button>
 
           <button
@@ -29,7 +29,7 @@ return (
             onClick={onConfirm}
             className={styles.deleteBtn}
           >
-            Видалити
+            Remove
           </button>
         </div>
       </div>

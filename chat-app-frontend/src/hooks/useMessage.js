@@ -43,7 +43,7 @@ export const useSocketListeners = (currentChatId) => {
         // 3. Обробник для оновлення списку чатів
         const handleChatListUpdate = () => {
             console.log("Socket.IO: Chat list updated. Refetching chat list...");
-            dispatch(fetchChats("")); // Оновлення списку (щоб побачити нове lastMessage)
+            dispatch(fetchChats(""));
         };
 
         socket.on('new_message', handleNewMessage);

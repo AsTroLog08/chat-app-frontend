@@ -19,7 +19,7 @@ export default function ChatDialog({ isOpen, onClose, onSubmit, initialData }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!firstName.trim() || !lastName.trim()) {
-      setError('Ім\'я та прізвище обов\'язкові.');
+      setError('First and last name are required.');
       return;
     }
     onSubmit({ firstName, lastName });

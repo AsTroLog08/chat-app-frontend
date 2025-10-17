@@ -8,13 +8,12 @@ const Message = ({ text, timestamp, incoming }) => {
   const dateObject = new Date(timestamp);
   
   const formattedTimestamp = dateObject.toLocaleString('en-US', {
-    // Вказуємо 'en-US' для отримання MM/DD/YYYY формату
     year: 'numeric',
     month: 'numeric',
     day: 'numeric',
     hour: 'numeric',
     minute: 'numeric',
-    hour12: true // Використовуємо AM/PM
+    hour12: true 
   });
 
   return (

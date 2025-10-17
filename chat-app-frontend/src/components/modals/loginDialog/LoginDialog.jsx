@@ -7,28 +7,27 @@ export default function LoginDialog({isOpen, onClose}) {
 
   const googleLogin = useGoogleLogin({
     onSuccess: (tokenResponse) => {
-      const token = tokenResponse.access_token; // Використовуємо Access Token
+      const token = tokenResponse.access_token; 
       console.log(token)
       dispatch(loginWithGoogle(token));
-      onClose(); // Закриваємо діалог після успішного логіну
+      onClose(); 
     },
     onError: () => {
-      console.error("Помилка при вході через Google");
+      console.error("Error logging in via Google");
     },
     
-    // Додатково: ви можете додати потрібні scope, наприклад: scope: 'email profile',
   });
     if (!isOpen) return null;
   return (
         <div className={styles.overlay}>
           <div className={styles.modal}>
-            <h2>Авторизація через Google</h2>
+            <h2>Authorization via Google</h2>
         <button
           type="button"
           onClick={() => googleLogin()}
-          className={styles.googleCustomBtn} // Створіть власний стиль для цієї кнопки
+          className={styles.googleCustomBtn}
         >
-          Увійти через Google
+          Sign in with Google
         </button>
 
     
@@ -38,7 +37,7 @@ export default function LoginDialog({isOpen, onClose}) {
                 onClick={onClose}
                 className={styles.cancelBtn}
               >
-                Скасувати
+                Cancel
               </button>
             </div>
           </div>
