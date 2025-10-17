@@ -42,6 +42,8 @@ const ChatList = ({ chats }) => {
         };
 
         dispatch(modifyChat(updatePayload));
+        console.log(chatId)
+        console.log(currentChat._id)
         if(chatId == currentChat._id){
           dispatch(fetchChat(chatId));
         }
