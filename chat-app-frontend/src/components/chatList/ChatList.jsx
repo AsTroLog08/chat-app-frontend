@@ -2,15 +2,19 @@ import React, { useState } from 'react';
 import styles from './ChatList.module.css';
 import ChatListItem from '../chatListItem/ChatListItem.jsx';
 import { useDispatch } from 'react-redux';
-import { modifyChat, removeChat } from '../../store/slices/chatSlice.js';
+import { fetchChat, modifyChat, removeChat } from '../../store/slices/chatSlice.js';
 import ConfirmDialog from '../modals/confirmDialog/ConfirmDialog.jsx';
 import ChatDialog from '../modals/chatDialog/ChatDialog.jsx';
+import { useChat } from '../../hooks/useChat.js';
+import { useNavigate } from 'react-router-dom';
 
 const ChatList = ({ chats }) => {
   
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
     const [chatToDelete, setChatToDelete] = useState({ id: null, name: '' });
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const {currentChat} = useChat(); 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [chatToEdit, setChatToEdit] = useState(null);
     if (!chats || chats.length === 0) { 
@@ -38,6 +42,9 @@ const ChatList = ({ chats }) => {
         };
 
         dispatch(modifyChat(updatePayload));
+        if(chatId == currentChat._id){
+          dispatch(fetchChat(chatId));
+        }
     
     };
 
@@ -56,7 +63,8 @@ const ChatList = ({ chats }) => {
   const handleChatDelete = () => {
       console.log('Видалити чат з ID:', chatToDelete.id);
        dispatch(removeChat(chatToDelete.id));
-        handleConfirmClose();
+       navigate("/")
+       handleConfirmClose();
   };
 
   return (
