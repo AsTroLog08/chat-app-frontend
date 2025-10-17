@@ -41,7 +41,7 @@ export const useSocketListeners = (currentChatId) => {
 
         dispatch(addToast({
             id: Date.now(),
-            title: `Нове повідомлення від ${message.chat.fullName}`,
+            title: `New message from ${message.chat.fullName}`,
             description: truncatedText,
             icon: message.chat.avatarUrl,
             backgroundColor: "#434446FF",
