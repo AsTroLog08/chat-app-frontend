@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { socket } from "../utils/socket.js";
 import { fetchChats } from "../store/slices/chatSlice.js";
-import { fetchMessages } from "../store/slices/messageSlice.js";
+import { addMessage, fetchMessages } from "../store/slices/messageSlice.js";
 import { addToast } from "../store/slices/toastSlice.js";
 
 export function useMessage() {
@@ -25,6 +25,11 @@ export const useSocketListeners = (currentChatId) => {
 
         // 2. Обробник для нових повідомлень (включаючи авто-відповідь)
         const handleNewMessage = (message) => {
+
+             dispatch(addMessage({
+                chatId: message.chat.id,
+                message: message
+            }));
         const truncatedText = message.autoResponse.text.length > 50 
             ? message.autoResponse.text.substring(0, 20) + '...'
             : message.autoResponse.text;
@@ -37,7 +42,6 @@ export const useSocketListeners = (currentChatId) => {
             backgroundColor: "#434446FF",
         }));
         
-        dispatch(fetchMessages(currentChatId)); 
         };
 
         // 3. Обробник для оновлення списку чатів
