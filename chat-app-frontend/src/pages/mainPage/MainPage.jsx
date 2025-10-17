@@ -19,7 +19,7 @@ import { useAuth } from "../../hooks/useAuth.js";
 
 // Компонент для відображення завантаження/помилки в контейнері
 // Компонент для відображення завантаження/помилки в контейнері
-const StatusPlaceholder = ({ loading, error, loadingText, errorText, minDelay = 300 }) => {
+const StatusPlaceholder = ({ loading, error, loadingText, errorText, minDelay = 300000 }) => {
     // Встановлюємо стан, чи треба показувати індикатор
     const [showLoading, setShowLoading] = useState(false);
 
