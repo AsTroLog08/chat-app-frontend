@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import ChatList from "../../components/chatList/ChatList.jsx";
@@ -24,25 +24,90 @@ const StatusPlaceholder = ({ loading, error, loadingText, errorText }) => {
     return null;
 };
 
+// ===================================
+// Додаткові компактні компоненти
+// ===================================
+
+const AuthButton = ({ user, onLogin, onLogout }) => (
+    user ? (
+        <button onClick={onLogout} className={styles.logOutButton}>Log Out</button>
+    ) : (
+        <button onClick={onLogin} className={styles.logOutButton}>Log In</button>
+    )
+);
+
+const ChatHeader = ({ chat, currentChatName, avatarUrl }) => (
+    <div className={styles.chatWindowHeader}>
+        <div className={styles.avatarContainer}>
+            <img className={styles.avatar} src={avatarUrl} alt="Chat Avatar" />
+            {/* Рекомендовано: використовувати іконку SVG/компонент замість зовнішнього URL */}
+            <img className={styles.onlineDot} src="https://cdn.pixabay.com/photo/2013/07/12/12/17/check-145512_640.png" alt="Online" />
+        </div>
+        <div className={styles.name}>{currentChatName}</div>
+    </div>
+);
+
+const MessageForm = ({ chatId, messageText, setMessageText, handleSendMessage, messagesLoading, messagesError }) => {
+    const isDisabled = !chatId || messagesLoading || messagesError;
+
+    return (
+        <form onSubmit={handleSendMessage} className={styles.inputContainer}>
+            <div className={styles.messageWrapper}>
+                <input
+                    type="text"
+                    placeholder="Type your message"
+                    className={styles.messageInput}
+                    value={messageText}
+                    onChange={(e) => setMessageText(e.target.value)}
+                    disabled={isDisabled}
+                />
+                <button 
+                    className={styles.sendButton} 
+                    type="submit"
+                    disabled={isDisabled || messageText.trim() === ''}
+                >
+                    <img src="https://www.svgrepo.com/show/418580/outlined-send-message.svg" alt="Send" />
+                </button>
+            </div>
+        </form>
+    );
+};
+
+
+// ===================================
+// Основний компонент
+// ===================================
+
 export default function MainPage() {
     const dispatch = useDispatch();
-    const { id: chatIdFromUrl } = useParams();
     const navigate = useNavigate();
+    const { id: chatIdFromUrl } = useParams();
 
+    // --- Стан Redux та Хуки ---
     const { userId, user, loading: authLoading } = useAuth();
-    const { chats, currentChat, loadingChats, errorChats, errorChatAction } = useChat();
+    const { chats, currentChat, loadingChats, errorChats } = useChat(); 
     const { messagesByChat, loading: messagesLoading, error: messagesError } = useMessage();
-
+    
+    // --- Локальний Стан ---
     const [messageText, setMessageText] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const [isCreateChatOpen, setIsCreateChatOpen] = useState(false);
     const [isLoginOpen, setIsLoginOpen] = useState(false);
     const [chatToEdit, setChatToEdit] = useState(null);
+
+    // --- Обчислювані Властивості (Мемоізовані) ---
     const currentMessages = messagesByChat[chatIdFromUrl] || [];
-    const currentChatName = currentChat?.displayName ||
-                           `${currentChat?.firstName || ''} ${currentChat?.lastName || ''}`.trim() ||
-                           "Select a Chat";
     const avatarUrl = currentChat?.avatarUrl;
+
+    const currentChatName = useMemo(() => {
+        if (!currentChat) return "Select a Chat";
+        if (currentChat.displayName) return currentChat.displayName;
+
+        const fullName = `${currentChat.firstName || ''} ${currentChat.lastName || ''}`.trim();
+        return fullName || "Unknown Chat";
+    }, [currentChat]);
+
+    const shouldShowChatDetails = !!chatIdFromUrl && !messagesError && !!currentChat;
 
     // Підключаємо WebSocket слухачів
     useSocketListeners(chatIdFromUrl);
@@ -52,13 +117,12 @@ export default function MainPage() {
     // -----------------------------
     const handleSearchChange = (e) => setSearchQuery(e.target.value);
 
+    // Обробники діалогових вікон
     const handleOpenCreateDialog = () => {
         setChatToEdit(null);
         setIsCreateChatOpen(true);
     };
-
     const handleCloseCreateDialog = () => setIsCreateChatOpen(false);
-
     const handleSubmitNewChat = (newChatData) => dispatch(createNewChat(newChatData));
 
     const handleOpenLoginDialog = () => setIsLoginOpen(true);
@@ -67,7 +131,6 @@ export default function MainPage() {
     const handleLogout = () => {
         dispatch(logout());
         navigate('/');
-        window.location.reload(); 
     };
 
     const handleSendMessage = (e) => {
@@ -82,15 +145,17 @@ export default function MainPage() {
     };
 
     // -----------------------------
-    // Завантаження даних
+    // Завантаження даних (useEffect)
     // -----------------------------
+    
+    // Ефект для завантаження списку чатів при зміні userId або пошукового запиту
     useEffect(() => {
         if (userId) {
             dispatch(fetchChats(searchQuery));
-            console.log("Current user/guest ID:", userId);
         }
     }, [userId, dispatch, searchQuery]);
 
+    // Ефект для завантаження деталей та повідомлень обраного чату
     useEffect(() => {
         if (chatIdFromUrl) {
             dispatch(fetchChat(chatIdFromUrl));
@@ -99,27 +164,14 @@ export default function MainPage() {
     }, [chatIdFromUrl, dispatch]);
 
     // -----------------------------
-    // Кнопка автентифікації
+    // Загальний Стан (Рендер)
     // -----------------------------
-    const AuthButton = () => user ? (
-        <button onClick={handleLogout} className={styles.logOutButton}>Log Out</button>
-    ) : (
-        <button onClick={handleOpenLoginDialog} className={styles.logOutButton}>Log In</button>
-    );
-
-    // -----------------------------
-    // Повне блокування екрану, якщо завантажується сесія
-    // -----------------------------
+    
+    // Блокування екрану, якщо йде завантаження сесії (початковий автологін)
     if (authLoading) {
         return <div className={styles.loadingScreen}>Завантаження сесії...</div>;
     }
-    
-    // Перевірка, чи можна показувати заголовок та форму
-    const shouldShowChatDetails = chatIdFromUrl && !messagesError;
 
-    // -----------------------------
-    // Основний рендер
-    // -----------------------------
     return (
         <>
             <div className={styles.appContainer}>
@@ -129,7 +181,11 @@ export default function MainPage() {
                 <div className={styles.sidebar}>
                     <div className={styles.sidebarHeader}>
                         <span>Hi, {user?.displayName || 'Guest'}</span>
-                        <AuthButton />
+                        <AuthButton 
+                            user={user} 
+                            onLogin={handleOpenLoginDialog} 
+                            onLogout={handleLogout} 
+                        />
                     </div>
 
                     <div className={styles.controlsRow}>
@@ -143,11 +199,9 @@ export default function MainPage() {
                                 onChange={handleSearchChange}
                             />
                         </div>
-                        <div>
-                            <button className={styles.createButton} onClick={handleOpenCreateDialog}>
-                                Create Chat
-                            </button>
-                        </div>
+                        <button className={styles.createButton} onClick={handleOpenCreateDialog}>
+                            Create Chat
+                        </button>
                     </div>
 
                     <div className={styles.chatsLabel}>Chats</div>
@@ -160,7 +214,7 @@ export default function MainPage() {
                             errorText="Помилка завантаження чатів."
                         />
                         
-                        {!loadingChats && !errorChats  && <ChatList chats={chats} />}
+                        {!loadingChats && !errorChats && <ChatList chats={chats} />}
                     </div>
                 </div>
 
@@ -169,15 +223,13 @@ export default function MainPage() {
                 {/* ======================================================= */}
                 <div className={styles.chatWindow}>
                     
-                    {/* ХЕДЕР ЧАТУ: Показуємо, тільки якщо є обраний чат і немає помилки */}
+                    {/* ХЕДЕР ЧАТУ */}
                     {shouldShowChatDetails && (
-                        <div className={styles.chatWindowHeader}>
-                            <div className={styles.avatarContainer}>
-                                <img className={styles.avatar} src={avatarUrl} alt="icon" />
-                                <img className={styles.onlineDot} src="https://cdn.pixabay.com/photo/2013/07/12/12/17/check-145512_640.png" alt="icon" />
-                            </div>
-                            <div className={styles.name}>{currentChatName}</div>
-                        </div>
+                        <ChatHeader 
+                            chat={currentChat} 
+                            currentChatName={currentChatName} 
+                            avatarUrl={avatarUrl} 
+                        />
                     )}
 
                     {/* КОНТЕЙНЕР ПОВІДОМЛЕНЬ */}
@@ -191,7 +243,7 @@ export default function MainPage() {
                             errorText="Помилка завантаження повідомлень."
                         />
                         
-                        {/* Основний рендер повідомлень або порожнього стану, якщо немає завантаження/помилки */}
+                        {/* Основний рендер повідомлень або порожнього стану */}
                         {!messagesLoading && !messagesError && (
                             currentMessages && currentMessages.length > 0 ? (
                                 currentMessages.map(msg => (
@@ -199,44 +251,36 @@ export default function MainPage() {
                                     key={msg.id}
                                     text={msg.text}
                                     timestamp={msg.timestamp}
-                                    incoming={msg.incoming}
+                                    incoming={msg.senderId !== userId} 
                                     sender={msg.sender}
                                 />
                                 ))
                             ) : (
                                 <div className={styles.emptyChatPlaceholder}>
-                                    {/* Змінено логіку відображення заглушки, щоб коректно працювати з shouldShowChatDetails */}
-                                    {chatIdFromUrl && currentChat ? "This chat is empty. You can be the first!" : "Select a chat to start messaging."}
+                                    {chatIdFromUrl && currentChat ? 
+                                        "This chat is empty. Be the first to send a message!" : 
+                                        "Select a chat to start messaging."
+                                    }
                                 </div>
                             )
                         )}
                     </div>
 
-                    {/* ФОРМА ВВОДУ ПОВІДОМЛЕНЬ: Показуємо, тільки якщо є обраний чат і немає помилки */}
+                    {/* ФОРМА ВВОДУ ПОВІДОМЛЕНЬ */}
                     {shouldShowChatDetails && (
-                        <form onSubmit={handleSendMessage} className={styles.inputContainer}>
-                            <div className={styles.messageWrapper}>
-                                <input
-                                    type="text"
-                                    placeholder="Type your message"
-                                    className={styles.messageInput}
-                                    value={messageText}
-                                    onChange={(e) => setMessageText(e.target.value)}
-                                    disabled={!currentChat?.id || messagesLoading || messagesError}
-                                />
-                                <button 
-                                    className={styles.sendButton} 
-                                    type="submit"
-                                    disabled={!currentChat?.id || messageText.trim() === '' || messagesLoading || messagesError}
-                                >
-                                    <img src="https://www.svgrepo.com/show/418580/outlined-send-message.svg" alt="Send" />
-                                </button>
-                            </div>
-                        </form>
+                        <MessageForm
+                            chatId={currentChat?.id}
+                            messageText={messageText}
+                            setMessageText={setMessageText}
+                            handleSendMessage={handleSendMessage}
+                            messagesLoading={messagesLoading}
+                            messagesError={messagesError}
+                        />
                     )}
                 </div>
             </div>
 
+            {/* Модальні вікна */}
             <ChatDialog
                 isOpen={isCreateChatOpen}
                 onClose={handleCloseCreateDialog}

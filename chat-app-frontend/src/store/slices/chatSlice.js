@@ -1,14 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { chatApi } from "../../api/endpoints/chatApi.js";
 
-// Async Thunk для отримання портфоліо
-
+// Створення нового чату
 export const createNewChat = createAsyncThunk(
-  "chatStore/createNewChat",
+  "chat/createNewChat",
   async (chatData, { dispatch, rejectWithValue }) => {
     try {
       const response = await chatApi.createChat(chatData);
-      dispatch(fetchChats({}));
+      dispatch(fetchChats()); 
       return response.data; 
     } catch (error) {
       return rejectWithValue(error.response?.data || "Error creating chat");
@@ -18,50 +17,50 @@ export const createNewChat = createAsyncThunk(
 
 // Отримання списку чатів
 export const fetchChats = createAsyncThunk(
-  "chatStore/fetchChats",
-  async (search, { rejectWithValue }) => {
+  "chat/fetchChats",
+  async (search = {}, { rejectWithValue }) => {
     try {
-      const data = await chatApi.getChats(search);
-      return data; // data = response.data
+      const response = await chatApi.getChats(search);
+      return response.data; 
     } catch (error) {
       return rejectWithValue(error.response?.data || "Error fetching chats");
     }
   }
 );
 
-// Отримання info чатy
+// Отримання інформації про один чат за ID
 export const fetchChat = createAsyncThunk(
-  "chatStore/fetchChat",
+  "chat/fetchChat",
   async (id, { rejectWithValue }) => {
     try {
       const response = await chatApi.getChat(id);
-      return response.data; // data = response.data
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "Error fetching chat");
     }
   }
 );
 
-// Видалення чату
+// Видалення чату за ID
 export const removeChat = createAsyncThunk(
-  "chatStore/removeChat",
+  "chat/removeChat",
   async (id, { dispatch, rejectWithValue }) => {
     try {
       await chatApi.deleteChat(id);
-      dispatch(fetchChats({})); // Оновлюємо список після видалення
+      dispatch(fetchChats()); 
     } catch (error) {
       return rejectWithValue(error.response?.data || "Error deleting chat");
     }
   }
 );
 
-// Оновлення чату
+// Оновлення інформації про чат
 export const modifyChat = createAsyncThunk(
-  "chatStore/modifyChat",
+  "chat/modifyChat",
   async ({ id, data }, { dispatch, rejectWithValue }) => {
     try {
       const response = await chatApi.updateChat(id, data);
-      dispatch(fetchChats({}));
+      dispatch(fetchChats());
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "Error updating chat");
@@ -70,34 +69,30 @@ export const modifyChat = createAsyncThunk(
 );
 
 const initialState = {
-  chats: null, // Список чатів
-  currentChat: null, // Інформація про поточний чат (якщо потрібна)
-  loadingChats: false, // Завантаження списку чатів
-  errorChats: null, // Помилки при отриманні списку чатів
-  loadingChatAction: false, // Завантаження для створення/видалення/оновлення
-  errorChatAction: null, // Помилки для створення/видалення/оновлення
+  chats: [], 
+  currentChat: null, 
+  loadingChats: false, 
+  errorChats: null, 
+  loadingChatAction: false,
+  errorChatAction: null,
 };
 
 const chatSlice = createSlice({
-  name: "chatStore",
+  name: "chat", // Скоротив назву slice
   initialState,
   reducers: {
-    // Синхронний редуктор для встановлення списку чатів
-    setChats: (state, action) => {
-      state.chats = action.payload;
-    },
-    // Синхронний редуктор для встановлення поточного чату
+    // Встановлення поточного чату
     setCurrentChat: (state, action) => {
       state.currentChat = action.payload;
     },
-    // Очищення помилок дії
+    // Очищення помилок
     clearChatActionError: (state) => {
-        state.errorChatAction = null;
+      state.errorChatAction = null;
     }
   },
   extraReducers: (builder) => {
     builder
-      // FETCH CHATS
+      // ==================== FETCH CHATS ====================
       .addCase(fetchChats.pending, (state) => {
         state.loadingChats = true;
         state.errorChats = null;
@@ -111,7 +106,7 @@ const chatSlice = createSlice({
         state.errorChats = action.payload;
       })
 
-      // FETCH CHAT
+      // ==================== FETCH CHAT ====================
       .addCase(fetchChat.pending, (state) => {
         state.loadingChatAction = true;
         state.errorChatAction = null;
@@ -125,40 +120,44 @@ const chatSlice = createSlice({
         state.errorChatAction = action.payload;
       })
 
-      // CREATE NEW CHAT
+      // ==================== CREATE NEW CHAT ====================
       .addCase(createNewChat.pending, (state) => {
         state.loadingChatAction = true;
         state.errorChatAction = null;
       })
-      .addCase(createNewChat.fulfilled, (state) => {
+      .addCase(createNewChat.fulfilled, (state, action) => {
         state.loadingChatAction = false;
+        state.currentChat = action.payload; 
       })
       .addCase(createNewChat.rejected, (state, action) => {
         state.loadingChatAction = false;
         state.errorChatAction = action.payload;
       })
       
-      // DELETE CHAT
+      // ==================== REMOVE CHAT ====================
       .addCase(removeChat.pending, (state) => {
         state.loadingChatAction = true;
         state.errorChatAction = null;
       })
       .addCase(removeChat.fulfilled, (state) => {
         state.loadingChatAction = false;
-
+        state.currentChat = null;
       })
       .addCase(removeChat.rejected, (state, action) => {
         state.loadingChatAction = false;
         state.errorChatAction = action.payload;
       })
 
-      // UPDATE CHAT
+      // ==================== MODIFY CHAT ====================
       .addCase(modifyChat.pending, (state) => {
         state.loadingChatAction = true;
         state.errorChatAction = null;
       })
-      .addCase(modifyChat.fulfilled, (state) => {
+      .addCase(modifyChat.fulfilled, (state, action) => {
         state.loadingChatAction = false;
+        if (state.currentChat && state.currentChat.id === action.payload.id) {
+            state.currentChat = action.payload;
+        }
       })
       .addCase(modifyChat.rejected, (state, action) => {
         state.loadingChatAction = false;
@@ -167,5 +166,5 @@ const chatSlice = createSlice({
   },
 });
 
-export const { setChats, setCurrentChat, clearChatActionError } = chatSlice.actions;
+export const { setCurrentChat, clearChatActionError } = chatSlice.actions;
 export default chatSlice.reducer;
