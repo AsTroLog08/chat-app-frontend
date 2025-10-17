@@ -131,6 +131,7 @@ export default function MainPage() {
     const handleLogout = () => {
         dispatch(logout());
         dispatch(clearStore());
+        dispatch(fetchChats());
         navigate('/');
     };
 

@@ -166,9 +166,9 @@ const chatSlice = createSlice({
         state.errorChatAction = action.payload;
       })
       .addCase(clearStore, (state) => {
-                // Скидаємо всі дані до початкового стану (крім loading, щоб не викликати flash)
-                state.chats = [];
-                state.error = null;
+          // Скидаємо всі дані до початкового стану (крім loading, щоб не викликати flash)
+          state.chats = [];
+          state.error = null;
       });
   },
 });
