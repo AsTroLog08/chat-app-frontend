@@ -210,7 +210,7 @@ export default function MainPage() {
                     
                     <div className={styles.chatListContainer}>
                         <StatusPlaceholder 
-                            loading={loadingChats} 
+                            loading={false} 
                             error={errorChats}
                             loadingText="Завантаження чатів..."
                             errorText="Помилка завантаження чатів."
@@ -239,7 +239,7 @@ export default function MainPage() {
 
                         {/* Відображення завантаження/помилки повідомлень */}
                         <StatusPlaceholder
-                            loading={messagesLoading}
+                            loading={false}
                             error={messagesError}
                             loadingText="Завантаження повідомлень..."
                             errorText="Помилка завантаження повідомлень."
