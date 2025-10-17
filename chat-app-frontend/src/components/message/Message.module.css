@@ -1,0 +1,52 @@
+/* src/components/Message/Message.module.css */
+.message {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.incoming {
+  justify-content: flex-start;
+}
+
+.outgoing {
+  justify-content: flex-end;
+}
+
+.bubble {
+  max-width: 60%; 
+  display: flex;
+  flex-direction: column;
+}
+
+.incoming .text {
+  background-color: #103361;
+  border-radius: 25px;
+  padding: 10px 18px;
+  color: #ffffff;
+}
+
+.outgoing .text {
+  background-color: #c6c7c9;
+  border-radius: 25px;
+  padding: 10px 18px;
+  color: #000000;
+}
+
+.text {
+  font-size: 1em;
+  word-wrap: break-word;
+}
+
+.outgoing .timestamp {
+  align-self: flex-end;
+  font-size: 0.7em;
+  color: #65676b;
+  margin-top: 5px;
+}
+
+.incoming .timestamp {
+  align-self: flex-start;
+  font-size: 0.7em;
+  color: #65676b;
+  margin-top: 5px;
+}

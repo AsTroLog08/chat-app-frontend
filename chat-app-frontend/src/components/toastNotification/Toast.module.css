@@ -1,0 +1,44 @@
+.notificationContainer {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.notification {
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  padding: 10px;
+  color: white;
+  transition: 0.3s;
+}
+
+.toast {
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.notificationImage img {
+  width: 32px;
+  height: 32px;
+  margin-right: 10px;
+}
+
+.notificationTitle {
+  font-weight: bold;
+}
+
+.notificationMessage {
+  font-size: 0.9rem;
+}
+
+/* позиції */
+.topRight {
+  top: 1rem;
+  right: 1rem;
+}
+
+.bottomLeft {
+  bottom: 1rem;
+  left: 1rem;
+}

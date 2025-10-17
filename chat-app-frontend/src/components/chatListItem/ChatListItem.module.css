@@ -1,0 +1,125 @@
+/* src/components/ChatListItem/ChatListItem.module.css */
+.item {
+  display: flex;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  align-items: center;
+  transition: background-color 0.2s ease-in-out;
+  position: relative; /* Для позиціонування кнопок при наведенні */
+}
+
+.item:hover {
+  background-color: #f5f5f5;
+}
+
+.active {
+  background-color: #e6f7ff; /* Фон для активного чату */
+  border-left: 3px solid #007bff;
+  padding-left: 12px; /* Зсув через border-left */
+}
+
+.avatarContainer {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ccc; /* Заглушка для аватара */
+  margin-right: 10px;
+  position: relative;
+  flex-shrink: 0; /* Щоб не стискався */
+}
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover; /* Щоб зображення добре вписувалось */
+}
+.onlineDot {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  background-color: #28a745; /* Зелений колір */
+  border-radius: 50%;
+  border: 1px solid white;
+}
+
+.details {
+  flex-grow: 1;
+  min-width: 0; /* Дозволяє тексту скорочуватися */
+  margin-right: 10px; /* Відступ від кнопок */
+}
+
+.name {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #333;
+}
+
+.preview {
+  color: #65676b;
+  font-size: 0.9em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.date {
+  font-size: 0.8em;
+  color: #aaa;
+  margin-left: 10px;
+  flex-shrink: 0; /* Запобігає стисканню дати */
+}
+
+/* 🚩 Нові стилі для кнопок редагування/видалення */
+.actionsContainer {
+  display: flex;
+  flex-direction: column; /* Дата зверху, кнопки знизу */
+  align-items: flex-end; /* Вирівнювання по правому краю */
+  gap: 5px; /* Відступ між датою та кнопками */
+  flex-shrink: 0; /* Щоб контейнер не стискався */
+}
+
+.buttonsGroup {
+  display: flex;
+  gap: 5px; /* Відступ між кнопками */
+  /* Заховати кнопки за замовчуванням */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+}
+
+.item:hover .buttonsGroup {
+  opacity: 1;
+  visibility: visible;
+}
+
+.actionButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  display: flex; /* Для центрування SVG */
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.actionButton:hover {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.deleteButton:hover {
+  background-color: #ffe0e0; /* Червоніший фон для видалення */
+  color: #d9534f; /* Червоний текст/іконка */
+}
+
+.actionButton svg {
+  display: block; /* Уникаємо зайвих відступів */
+}

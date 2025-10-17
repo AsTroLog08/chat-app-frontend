@@ -1,0 +1,84 @@
+/* Фон модального вікна */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(17, 24, 39, 0.7); 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+/* Контейнер модалки */
+.modal {
+  
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.75rem; 
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15); 
+  width: 100%;
+  max-width: 24rem; /* max-w-sm */
+}
+
+/* Заголовок */
+.title {
+  font-size: 1.25rem;
+  font-weight: 700; 
+  margin-bottom: 1rem;
+}
+
+/* Інпут */
+.input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #d1d5db; 
+  border-radius: 0.5rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+/* Помилка */
+.error {
+  color: #ef4444; /* text-red-500 */
+  margin-bottom: 1rem;
+}
+
+/* Контейнер кнопок */
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+/* Кнопка "Скасувати" */
+.cancelBtn {
+  padding: 0.5rem 1rem;
+  background-color: #e5e7eb; /* bg-gray-200 */
+  color: #374151; /* text-gray-700 */
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+.cancelBtn:hover {
+  background-color: #d1d5db; /* hover:bg-gray-300 */
+}
+
+/* Кнопка "Створити" */
+.submitBtn {
+  padding: 0.5rem 1rem;
+  background-color: #2563eb; /* bg-blue-600 */
+  color: white;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+.submitBtn:hover {
+  background-color: #1d4ed8; /* hover:bg-blue-700 */
+}

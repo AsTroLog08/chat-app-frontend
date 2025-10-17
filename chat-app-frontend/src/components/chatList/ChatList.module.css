@@ -1,0 +1,195 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+  }
+  .custombutton {
+    z-index: 9999;
+    background: #4CAF50 !important; /* Змінює фон */
+    color: white !important; /* Текст білий */
+    border-radius: 10px; /* Закруглення */
+  }
+  .userConnectWallet {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+  .error{
+    color: red;
+  }
+  .connectWalletContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    max-width: 460px;
+    border-radius: 16px;
+    box-shadow: 0px 0px 30px #491383;
+    padding: 32px 32px 10px 32px;
+    transition: all 0.3s ease;
+  }
+  /* ConnectWallet.module.css */
+.connectionOptions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 24px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(35, 37, 43, 1);
+  }
+  
+  .optionButton {
+    flex: 1;
+    padding: 13px 0px;
+    text-align: center;
+    width: 100%;
+    color: #FFC205;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  
+  .optionButton.selected {
+    background-color: #FFC205;
+    color: #23252b;
+  }
+  
+  .web3ModalOption {
+    text-align: center;
+
+    border-radius: 12px;
+    margin-bottom: 24px;
+  }
+  
+  .manualInputForm {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  
+  .addressInput {
+    width: 100%;
+    color: white;
+    background-color: transparent;
+    border: 1px solid rgba(35, 37, 43, 1);
+    padding: 10px 15px;
+    border-radius: 12px;
+    font-size: 16px;
+    box-sizing: border-box; 
+  }
+/************/
+  .card {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+  }
+  
+  .portfolioInput {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  
+  .navigationButtons {
+
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  .navigationButtonsFirstPage {
+    display: flex;
+    justify-content:flex-end;
+    margin-top: 20px;
+  }
+  .backButton {
+    padding: 5px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 12px;
+    color: #B9B9B9;
+  }
+  .nextButton {
+    padding: 5px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 12px;
+    color: #ffffff;
+  }
+  .createButton{
+    font-size: 18px;
+    font-weight: 500;
+    padding: 5px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 12px;
+    color: #FFC205;
+  }
+  .pageIndicators {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  
+  .indicator {
+    cursor: pointer;
+    width: 30px;
+    height: 2px;
+    border-radius: 20px;
+    background: #B9B9B9;
+    transition: background 0.3s;
+  }
+  
+  .indicator.active {
+    background: #FFC205;
+  }
+
+/************/
+  .chooseWallet{
+    color: white;
+  }
+  .connectButton {
+    padding: 14px 0px;
+    text-align: center;
+    width: 200px;
+    border: 1px solid #491383;
+    color: white;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.5s ease;
+  }
+  
+  .connectButton:hover {
+    background-color: #e6af00;
+  }
+  
+  .connectedStatus {
+    margin-top: 24px;
+    padding: 16px;
+    background-color: rgba(35, 37, 43, 0.05);
+    border-radius: 12px;
+  }
+  
+  .addressBox {
+    padding: 12px;
+    background-color: white;
+    border-radius: 8px;
+    font-family: monospace;
+    word-break: break-all;
+    margin-top: 8px;
+    border: 1px solid rgba(35, 37, 43, 0.1);
+  }

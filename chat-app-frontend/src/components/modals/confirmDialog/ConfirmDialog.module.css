@@ -1,0 +1,70 @@
+/* Фон модального вікна */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(17, 24, 39, 0.7); /* bg-gray-900 bg-opacity-70 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+/* Контейнер модалки */
+.modal {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.75rem; /* rounded-xl */
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15); /* shadow-2xl */
+  width: 100%;
+  max-width: 20rem; /* max-w-xs */
+}
+
+/* Заголовок */
+.title {
+  font-size: 1.25rem; /* text-xl */
+  font-weight: 700; /* font-bold */
+  margin-bottom: 1rem;
+  color: #dc2626; /* text-red-600 */
+}
+
+/* Текст повідомлення */
+.text {
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  color: #111827;
+}
+
+/* Контейнер кнопок */
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+/* Кнопка "Скасувати" */
+.cancelBtn {
+  padding: 0.5rem 1rem;
+  background-color: #e5e7eb; /* bg-gray-200 */
+  color: #374151; /* text-gray-700 */
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+.cancelBtn:hover {
+  background-color: #d1d5db; /* hover:bg-gray-300 */
+}
+
+/* Кнопка "Видалити" */
+.deleteBtn {
+  padding: 0.5rem 1rem;
+  background-color: #dc2626; /* bg-red-600 */
+  color: white;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+.deleteBtn:hover {
+  background-color: #b91c1c; /* hover:bg-red-700 */
+}
