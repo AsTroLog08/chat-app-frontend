@@ -1,200 +1,200 @@
+/* ==================== GLOBAL LAYOUT ==================== */
 .appContainer {
-  display: flex;
-  height: 100vh; /* Висота на весь екран */
-  margin: 0 auto;
-  background-color: #fff;
+    display: flex;
+    height: 100vh;
+    margin: 0 auto;
+    background-color: #f0f2f5; 
 }
+
+/* ==================== SIDEBAR (ЛІВА ПАНЕЛЬ) ==================== */
 .sidebar {
-  width: 350px; /* Приблизна ширина лівої панелі */
-  border-right: 1px solid #ddd;
-  background-color: #fff;
-  display: flex;
-  flex-direction: column;
+    width: 350px; 
+    min-width: 300px;
+    border-right: 1px solid #ddd;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
 }
 
 .sidebarHeader {
     display: flex;
     justify-content: flex-end;
-    padding: 10px;
+    padding: 10px 15px;
     border-bottom: 1px solid #eee;
 }
 
 .logOutButton {
     background: none;
     border: none;
-    color: #007bff; /* Синій колір для "Log in" */
+    color: #007bff;
     cursor: pointer;
     font-weight: 500;
+    padding: 5px 10px;
+}
+
+.controlsRow {
+    display: flex; 
+    align-items: center; 
+    gap: 10px;
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.createButton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.createButton:hover {
+    background-color: #005bbd;
 }
 
 .searchContainer {
-  display: flex;
-  align-items: center;
-  margin: 10px 15px;
-  padding: 5px 10px;
-  background-color: #f0f2f5; /* Сірий фон для поля пошуку */
-  border-radius: 20px;
+    display: flex;
+    align-items: center;
+    margin: 10px 15px;
+    padding: 8px 12px;
+    background-color: #f0f2f5; 
+    border-radius: 20px;
 }
 
 .searchIcon {
-  margin-right: 8px;
-  color: #606770;
+    margin-right: 8px;
+    color: #606770;
 }
 
 .searchInput {
-  border: none;
-  background: transparent;
-  width: 100%;
-  outline: none;
-  padding: 5px 0;
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 0;
+    font-size: 15px;
 }
 
-.chatsLabel {
-  font-weight: bold;
-  color: #007bff;
-  padding: 10px 15px;
-  border-bottom: 1px solid #eee;
+.chatListContainer {
+    flex-grow: 1;
+    overflow-y: auto;
 }
 
+/* ==================== CHAT WINDOW (ПРАВА ПАНЕЛЬ) ==================== */
 .chatWindow {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  background-color: #f9f9f9; /* Світло-сірий фон для області чату */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #f9f9f9; 
 }
 
+/* Header чату */
 .chatWindowHeader {
-  display: flex;
-  align-items: center;
-  padding: 10px 20px;
-  border-bottom: 1px solid #ddd;
-  background-color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+    background-color: #fff;
 }
 
 .avatarContainer {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #ccc; /* Заглушка для аватара */
-  margin-right: 10px;
-  position: relative;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    position: relative;
+    flex-shrink: 0;
 }
+
 .avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
 }
+
 .onlineDot {
     position: absolute;
     bottom: 0;
     right: 0;
     width: 10px;
     height: 10px;
-    background-color: #28a745; /* Зелений колір */
+    background-color: #28a745; 
     border-radius: 50%;
-    border: 1px solid white;
+    border: 2px solid white;
 }
+
 .name {
     font-weight: 600;
-    
+    font-size: 1.1em;
 }
 
+/* Контейнер повідомлень */
 .messagesContainer {
-  flex-grow: 1;
-  padding: 20px;
-  overflow-y: auto; /* Прокрутка для повідомлень */
-  display: flex;
-  flex-direction: column;
-  /* Для коректного відображення повідомлень знизу вгору можна використати: */
-  /* justify-content: flex-end; */ 
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
+/* Поле вводу повідомлень */
 .inputContainer {
     display: flex;
     align-items: center; 
-    padding: 10px 15px; /* Загальний відступ від країв вікна чату */
+    padding: 10px 15px;
     border-top: 1px solid #ddd;
-    background-color: #f9f9f9;
+    background-color: #fff; 
 }
 
 .messageWrapper {
-    /* 🚩 Це наш спільний "залитий" контейнер */
     display: flex;
     align-items: center;
-    flex-grow: 1; /* Займає весь доступний простір */
-    
-    background-color: #fff; /* Білий залитий фон */
-    border: 1px solid #ccc; /* Спільна рамка */
-    border-radius: 25px; /* Спільні закруглені кути */
-    padding: 5px; /* Внутрішній відступ для інпуту та кнопки */
+    flex-grow: 1;
+    background-color: #f0f2f5;
+    border-radius: 25px;
+    padding: 5px 15px;
+    margin-right: 10px;
 }
 
 .messageInput {
-    /* Прибираємо рамку, щоб він злився з messageWrapper */
     flex-grow: 1; 
-    padding: 5px 10px;
-    border: none; /* 🚩 Прибрали рамку */
-    background: none; /* 🚩 Прибрали фон */
+    padding: 5px 0;
+    border: none;
+    background: none;
     font-size: 16px;
     outline: none;
 }
 
-.messageInput:focus {
-    /* Не змінюємо рамку, щоб зберегти єдиний вигляд */
-    box-shadow: none; 
-}
-
 .sendButton {
-    /* Стилі кнопки-іконки */
-    background-color: #ffffff; /* 🚩 Яскравий колір для кнопки */
+    background-color: #007bff; 
     border: none;
-    padding: 0;
     cursor: pointer;
     display: flex; 
     align-items: center;
     justify-content: center;
-    height: 38px;
-    width: 38px;
+    height: 40px;
+    width: 40px;
     border-radius: 50%;
-    transition: background-color 0.5s;
-    margin-left: 5px; /* Відступ від інпуту */
-    flex-shrink: 0; /* Щоб кнопка не стискалася */
+    transition: background-color 0.3s;
+    flex-shrink: 0; 
 }
 
 .sendButton:hover {
-    background-color: #8a8a8a;
+    background-color: #005bbd;
 }
 
+
 .sendButton img {
+    filter: brightness(0) invert(1);
     width: 20px;
     height: 20px;
 }
 
-
-
-.controlsRow {
-    display: flex; /* Головне для розміщення в один рядок */
-    align-items: center; /* Вирівнювання елементів по центру вертикалі */
-
-    padding: 3px;
-    border-bottom: 1px solid #eee;
-}
-.createButton {
-    background-color: #005bbd;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 10px 8px;
-    cursor: pointer; /* Зробити кнопку клікабельною */
-    font-weight: bold;
-    transition: background-color 0.3s;
-
-}
-
-.createButton:hover {
-    background-color: #03305f;
-}
- .statusMessage {
+/* ==================== СТАНИ ТА ПОВІДОМЛЕННЯ ==================== */
+.statusMessage {
     padding: 20px;
     text-align: center;
     color: #888;
@@ -204,8 +204,4 @@
 .errorMessage {
     color: #e74c3c;
     font-weight: bold;
-}
-.chatListContainer {
-    flex-grow: 1;
-    overflow-y: auto;
 }
