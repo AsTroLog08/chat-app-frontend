@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
-import MainPage from "./pages/MainPage/MainPage.jsx";
 import { Routes,Route } from "react-router-dom";
 import { useEffect } from "react";
 import { autoLogin } from "./store/slices/authSlice";
+import MainPage from "./pages/mainPage/MainPage.jsx";
 
 function AppInitializer() {
     const dispatch = useDispatch();
