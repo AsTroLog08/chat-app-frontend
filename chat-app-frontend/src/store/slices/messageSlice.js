@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { messageApi } from '../../api/endpoints/messageApi.js';
 import { clearStore } from './authSlice.js';
+import { updateChatLastMessage } from './chatSlice.js';
 
 // Асинхронна операція для завантаження повідомлень чату
 export const fetchMessages = createAsyncThunk(
@@ -23,10 +24,17 @@ export const sendMessage = createAsyncThunk(
 
       const response = await messageApi.sendMessage(chatId, text);
 
-      dispatch(addMessage({
-        chatId,
-        message: response.data
-      }));
+// !!! Оновлено: використовуємо нову дію messageReceived 
+      dispatch(messageReceived({ 
+         chatId,
+        message: response.data 
+     }));
+        
+        // !!! Додано: Оновлюємо chatSlice напряму для останнього повідомлення в списку
+        dispatch(updateChatLastMessage({
+            chatId: chatId,
+            message: response.data,
+        }));
 
       return response.data; 
     } catch (error) {
@@ -43,15 +51,19 @@ const messageSlice = createSlice({
         error: null,
     },
     reducers: {
-        addMessage: (state, action) => {
+        messageReceived: (state, action) => { // Змінено назву на messageReceived
             const { chatId, message } = action.payload;
-            
-            if (!state.messagesByChat[chatId]) {
-                state.messagesByChat[chatId] = [];
+
+              if (!state.messagesByChat[chatId]) {
+                  state.messagesByChat[chatId] = [];
+              }
+            // Додаємо повідомлення лише якщо його ще немає (проста дедуплікація)
+              const isDuplicate = state.messagesByChat[chatId].some(msg => msg.id === message.id);
+              if (!isDuplicate) {
+              state.messagesByChat[chatId].push(message);
+              }
             }
-            state.messagesByChat[chatId].push(message);
-        }
-    },
+        },
     extraReducers: (builder) => {
         builder
             // ==================== fetchMessages ====================
@@ -76,6 +88,6 @@ const messageSlice = createSlice({
     },
 });
 
-export const { addMessage } = messageSlice.actions;
+export const { messageReceived } = messageSlice.actions;
 
 export default messageSlice.reducer;

@@ -91,6 +91,20 @@ const chatSlice = createSlice({
     setCurrentChat: (state, action) => {
       state.currentChat = action.payload;
     },
+    updateChatLastMessage: (state, action) => {
+            const { chatId, message } = action.payload;
+            const chatIndex = state.chats.findIndex(chat => chat.id === chatId);
+            
+            if (chatIndex !== -1) {
+                // Оновлюємо поле lastMessage для відображення в ChatList
+                state.chats[chatIndex].lastMessage = message.text; 
+                state.chats[chatIndex].timestamp = message.timestamp; // Якщо повідомлення має timestamp
+                
+                // Переміщуємо оновлений чат на початок списку (якщо потрібно)
+                const updatedChat = state.chats.splice(chatIndex, 1)[0];
+                state.chats.unshift(updatedChat);
+            }
+     },
     // Очищення помилок дії
     clearChatActionError: (state) => {
         state.errorChatAction = null;
@@ -173,5 +187,5 @@ const chatSlice = createSlice({
   },
 });
 
-export const { setChats, setCurrentChat, clearChatActionError } = chatSlice.actions;
+export const { setChats, setCurrentChat, updateChatLastMessage,  clearChatActionError } = chatSlice.actions;
 export default chatSlice.reducer;

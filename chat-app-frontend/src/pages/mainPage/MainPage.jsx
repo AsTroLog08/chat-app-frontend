@@ -18,28 +18,8 @@ import { useMessage, useSocketListeners } from "../../hooks/useMessage.js";
 import { useAuth } from "../../hooks/useAuth.js";
 
 // Компонент для відображення завантаження/помилки в контейнері
-// Компонент для відображення завантаження/помилки в контейнері
-const StatusPlaceholder = ({ loading, error, loadingText, errorText, minDelay = 300000 }) => {
-    // Встановлюємо стан, чи треба показувати індикатор
-    const [showLoading, setShowLoading] = useState(false);
-
-    useEffect(() => {
-        let timer;
-        if (loading) {
-            // Почати таймаут для показу індикатора
-            timer = setTimeout(() => {
-                setShowLoading(true);
-            }, minDelay);
-        } else {
-            // Скидаємо показ, коли завантаження завершено
-            setShowLoading(false);
-        }
-        
-        // Очищення таймауту при unmount або зміні loading
-        return () => clearTimeout(timer);
-    }, [loading, minDelay]);
-
-    if (showLoading) return <div className={styles.statusMessage}>{loadingText || "Завантаження..."}</div>;
+const StatusPlaceholder = ({ loading, error, loadingText, errorText }) => {
+    if (loading) return <div className={styles.statusMessage}>{loadingText || "Завантаження..."}</div>;
     if (error) return <div className={`${styles.statusMessage} ${styles.errorMessage}`}>{errorText || "Помилка."}</div>;
     return null;
 };
