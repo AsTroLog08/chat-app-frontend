@@ -32,9 +32,9 @@ export const useSocketListeners = (currentChatId) => {
             }));
             dispatch(updateChatLastMessage({
                 chatId: chatId,
-                message: message.autoResponse.text,
+                message: message.autoResponse,
             }));
-            console.log(message.autoResponse)
+            console.log(message.autoResponse.text)
         const truncatedText = message.autoResponse.text.length > 50 
             ? message.autoResponse.text.substring(0, 20) + '...'
             : message.autoResponse.text;
