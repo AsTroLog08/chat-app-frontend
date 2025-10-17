@@ -1,6 +1,6 @@
 import { useGoogleLogin  } from "@react-oauth/google";
 import { useDispatch } from "react-redux";
-import { loginWithGoogle } from "../../../store/slices/authSlice";
+import { loginWithGoogle } from "../../../store/slices/authSlice.js";
 import styles from "./LoginDialog.module.css";
 export default function LoginDialog({isOpen, onClose}) {
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
-import Toast from "./Toast";
-import { removeToast } from "../../store/slices/toastSlice";
+import Toast from "./Toast.jsx";
+import { removeToast } from "../../store/slices/toastSlice.js";
 
 export default function ToastContainer() {
   const { list } = useSelector((state) => state.toast);

@@ -2,10 +2,9 @@ import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client';
 import { Provider } from "react-redux";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import store from './store/index';
-import Toast from './components/toastNotification/Toast';
-import RootWrapper from './components/layout/RootWrapper';
-import ToastContainer from './components/toastNotification/ToastContainer';
+import store from './store/index.js';
+import RootWrapper from './components/layout/RootWrapper.jsx';
+import ToastContainer from './components/toastNotification/ToastContainer.jsx';
 import { BrowserRouter } from 'react-router-dom';
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);

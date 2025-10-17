@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import MainPage from "./pages/MainPage/mainPage";
+import MainPage from "./pages/MainPage/MainPage.jsx";
 import { Routes,Route } from "react-router-dom";
 import { useEffect } from "react";
 import { autoLogin } from "./store/slices/authSlice";

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { chatApi } from "../../api/endpoints/chatApi";
+import { chatApi } from "../../api/endpoints/chatApi.js";
 
 // Async Thunk для отримання портфоліо
 

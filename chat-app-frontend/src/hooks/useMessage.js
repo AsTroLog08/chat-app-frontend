@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { socket } from "../utils/socket";
-import { fetchChats } from "../store/slices/chatSlice";
-import { fetchMessages } from "../store/slices/messageSlice";
-import { addToast } from "../store/slices/toastSlice";
+import { socket } from "../utils/socket.js";
+import { fetchChats } from "../store/slices/chatSlice.js";
+import { fetchMessages } from "../store/slices/messageSlice.js";
+import { addToast } from "../store/slices/toastSlice.js";
 
 export function useMessage() {
   const { messagesByChat, loading, error } = useSelector((state) => state.messageStore);

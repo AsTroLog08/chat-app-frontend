@@ -1,7 +1,7 @@
 import { io } from 'socket.io-client';
 
 // 🚩 Встановіть URL вашого Socket.IO сервера
-const URL = 'http://localhost:5000'; 
+const URL = 'https://chat-app-backend-gbe1.onrender.com/api/'; 
 
 // Створюємо та експортуємо єдиний екземпляр сокета
 export const socket = io(URL, {

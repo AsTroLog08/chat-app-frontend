@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./slices/authSlice";
-import chatReducer from "./slices/chatSlice";
-import messageReducer from "./slices/messageSlice"
-import toastReducer from "./slices/toastSlice";
-import { errorMiddleware } from "./middleware/errorMiddleware";
+import authReducer from "./slices/authSlice.js";
+import chatReducer from "./slices/chatSlice.js";
+import messageReducer from "./slices/messageSlice.js"
+import toastReducer from "./slices/toastSlice.js";
+import { errorMiddleware } from "./middleware/errorMiddleware.js";
 
 const store = configureStore({
   reducer: {

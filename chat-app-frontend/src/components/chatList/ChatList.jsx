@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styles from './ChatList.module.css';
-import ChatListItem from '../chatListItem/ChatListItem';
+import ChatListItem from '../chatListItem/ChatListItem.jsx';
 import { useDispatch } from 'react-redux';
-import { modifyChat, removeChat } from '../../store/slices/chatSlice';
-import ConfirmDialog from '../modals/confirmDialog/ConfirmDialog';
-import ChatDialog from '../modals/chatDialog/ChatDialog';
+import { modifyChat, removeChat } from '../../store/slices/chatSlice.js';
+import ConfirmDialog from '../modals/confirmDialog/ConfirmDialog.jsx';
+import ChatDialog from '../modals/chatDialog/ChatDialog.jsx';
 
 const ChatList = ({ chats }) => {
   

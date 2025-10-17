@@ -1,7 +1,7 @@
 /*import React, { useEffect, useRef } from 'react';
 import { useUser } from "../../hooks/useUser";
 import { initializeAuth } from '../../store/index';*/
-import App from '../../App';
+import App from '../../App.jsx';
 import "../../styles/index.css";
 
 const RootWrapper = () => {/*

@@ -2,20 +2,20 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import ChatList from "../../components/chatList/ChatList";
-import Message from "../../components/message/Message";
-import ChatDialog from "../../components/modals/chatDialog/ChatDialog";
-import LoginDialog from "../../components/modals/loginDialog/LoginDialog";
+import ChatList from "../../components/chatList/ChatList.jsx";
+import Message from "../../components/message/Message.jsx";
+import ChatDialog from "../../components/modals/chatDialog/ChatDialog.jsx";
+import LoginDialog from "../../components/modals/loginDialog/LoginDialog.jsx";
 
 import styles from "./MainPage.module.css";
 
-import { createNewChat, fetchChat, fetchChats } from "../../store/slices/chatSlice";
-import { fetchMessages, sendMessage } from "../../store/slices/messageSlice";
-import { logout } from "../../store/slices/authSlice";
+import { createNewChat, fetchChat, fetchChats } from "../../store/slices/chatSlice.js";
+import { fetchMessages, sendMessage } from "../../store/slices/messageSlice.js";
+import { logout } from "../../store/slices/authSlice.js";
 
-import { useChat } from "../../hooks/useChat";
-import { useMessage, useSocketListeners } from "../../hooks/useMessage";
-import { useAuth } from "../../hooks/useAuth";
+import { useChat } from "../../hooks/useChat.js";
+import { useMessage, useSocketListeners } from "../../hooks/useMessage.js";
+import { useAuth } from "../../hooks/useAuth.js";
 
 // Компонент для відображення завантаження/помилки в контейнері
 const StatusPlaceholder = ({ loading, error, loadingText, errorText }) => {

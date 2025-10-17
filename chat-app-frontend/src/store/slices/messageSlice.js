@@ -1,7 +1,7 @@
 // store/slices/messageSlice.js
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { messageApi } from '../../api/endpoints/messageApi';
+import { messageApi } from '../../api/endpoints/messageApi.js';
 
 
 export const fetchMessages = createAsyncThunk(

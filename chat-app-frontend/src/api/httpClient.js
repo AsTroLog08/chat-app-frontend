@@ -2,7 +2,7 @@ import axios from 'axios';
 import { API_BASE_URL } from './config';
 // ❗ ПРИПУСКАЄМО: Ця функція оновлена, щоб повертати 'guest_id' 
 // АБО null, якщо 'authToken' вже існує.
-import { getOrCreateGuestId } from '../utils/guestId'; 
+import { getOrCreateGuestId } from '../utils/guestId.js'; 
 
 const httpClient = axios.create({
   baseURL: API_BASE_URL,

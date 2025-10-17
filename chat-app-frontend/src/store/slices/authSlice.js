@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { authApi } from "../../api/endpoints/authApi";
-import { getOrCreateGuestId } from "../../utils/guestId";
+import { authApi } from "../../api/endpoints/authApi.js";
+import { getOrCreateGuestId } from "../../utils/guestId.js";
 
 export const loginWithGoogle = createAsyncThunk(
   "authStore/loginWithGoogle",
