@@ -22,7 +22,7 @@ export const sendMessage = createAsyncThunk(
     try {
 
       const response = await messageApi.sendMessage(chatId, text);
-
+      console.log (response.data)
       dispatch(addMessage({
         chatId,
         message: response.data

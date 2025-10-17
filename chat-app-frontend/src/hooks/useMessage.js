@@ -25,9 +25,9 @@ export const useSocketListeners = (currentChatId) => {
 
         // 2. Обробник для нових повідомлень (включаючи авто-відповідь)
         const handleNewMessage = (message) => {
-
+        const chatId = message.chat.id;
              dispatch(addMessage({
-                chatId: message.chat.id,
+                chatId,
                 message: message.autoResponse
             }));
             console.log(message.autoResponse)
