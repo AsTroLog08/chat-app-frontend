@@ -10,42 +10,37 @@ const ChatList = ({ chats }) => {
   
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
     const [chatToDelete, setChatToDelete] = useState({ id: null, name: '' });
-
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [chatToEdit, setChatToEdit] = useState(null);
-  if (!chats || chats.length === 0) { 
-    return null;
-  }
     const dispatch = useDispatch();
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [chatToEdit, setChatToEdit] = useState(null);
+    if (!chats || chats.length === 0) { 
+      return null;
+    }
 
 
-const handleEditChat = (chatId) => {
+
+  const handleEditChat = (chatId) => {
         console.log('Редагувати чат з ID:', chatId);
-        // 1. Знаходимо поточні дані чату за ID
         const chatData = chats.find(chat => chat.id === chatId);
         
-        // 2. Встановлюємо знайдені дані у chatToEdit (для initialData)
-        //    Якщо не знайдено, краще не відкривати діалог.
         if (chatData) {
             setChatToEdit(chatData);
-            setIsDialogOpen(true); // 3. Відкриваємо діалог
+            setIsDialogOpen(true); 
         }
     };
     
     const handleEditSubmit = (editedData) => {
 
-        const chatId = chatToEdit.id; // Отримуємо ID з об'єкта чату
+        const chatId = chatToEdit.id; 
         const updatePayload = {
             id: chatId,
-            data: editedData // editedData - це { firstName, lastName }
+            data: editedData 
         };
 
         dispatch(modifyChat(updatePayload));
-      
-        // Діалог закривається автоматично через onClose() всередині ChatDialog
+    
     };
 
-    // Функція закриття діалогу (передаємо як onClose)
     const handleCloseDialog = () => {
       setIsDialogOpen(false);
     };
@@ -54,10 +49,9 @@ const handleEditChat = (chatId) => {
         setIsConfirmOpen(true);
     };
 
-    // 2. Функція, що закриває діалог (для кнопки "Скасувати")
     const handleConfirmClose = () => {
         setIsConfirmOpen(false);
-        setChatToDelete({ id: null, name: '' }); // Очистити дані
+        setChatToDelete({ id: null, name: '' });
     };
   const handleChatDelete = () => {
       console.log('Видалити чат з ID:', chatToDelete.id);
@@ -76,20 +70,20 @@ const handleEditChat = (chatId) => {
           avatarUrl={chat.avatarUrl} 
           date={chat.date} 
           active={chat.active} 
-          onEdit={handleEditChat}     // Передаємо функцію редагування
-          onDeleteConfirm={handleConfirmOpen}  // Передаємо функцію видалення
+          onEdit={handleEditChat}
+          onDeleteConfirm={handleConfirmOpen}
         />
       ))}
                   <ConfirmDialog 
                 isOpen={isConfirmOpen} 
                 onClose={handleConfirmClose} 
-                onConfirm={handleChatDelete} // Функція, що виконує видалення
-                chatName={chatToDelete.name} // Ім'я для відображення в модальному вікні
+                onConfirm={handleChatDelete}
+                chatName={chatToDelete.name}
             />
                         <ChatDialog
                             isOpen={isDialogOpen}
-                            onClose={handleCloseDialog} // Передаємо функцію для закриття
-                            onSubmit={handleEditSubmit} // Передаємо функцію для обробки даних
+                            onClose={handleCloseDialog}
+                            onSubmit={handleEditSubmit}
                             initialData={chatToEdit}
                         />
     </div>
