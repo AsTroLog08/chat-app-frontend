@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import { autoLogin } from "./store/slices/authSlice";
 import MainPage from "./pages/mainPage/MainPage.jsx";
+import "./styles/index.css"
 
 function AppInitializer() {
     const dispatch = useDispatch();
