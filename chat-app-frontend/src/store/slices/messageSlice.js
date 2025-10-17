@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { messageApi } from '../../api/endpoints/messageApi.js';
+import { clearStore } from './authSlice.js';
 
 // Асинхронна операція для завантаження повідомлень чату
 export const fetchMessages = createAsyncThunk(
@@ -66,6 +67,11 @@ const messageSlice = createSlice({
             .addCase(fetchMessages.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
+            })
+            .addCase(clearStore, (state) => {
+              // Скидаємо всі дані до початкового стану (крім loading, щоб не викликати flash)
+              state.messagesByChat = [];
+              state.error = null;
             });
     },
 });

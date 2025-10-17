@@ -1,6 +1,9 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import { authApi } from "../../api/endpoints/authApi.js";
 import { getOrCreateGuestId } from "../../utils/guestId.js";
+
+
+export const clearStore = createAction('global/clearStore');
 
 // Асинхронна Thunk-дія для логіну через Google
 export const loginWithGoogle = createAsyncThunk(

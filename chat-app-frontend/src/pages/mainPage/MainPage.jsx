@@ -11,7 +11,7 @@ import styles from "./MainPage.module.css";
 
 import { createNewChat, fetchChat, fetchChats } from "../../store/slices/chatSlice.js";
 import { fetchMessages, sendMessage } from "../../store/slices/messageSlice.js";
-import { logout } from "../../store/slices/authSlice.js";
+import { clearStore, logout } from "../../store/slices/authSlice.js";
 
 import { useChat } from "../../hooks/useChat.js";
 import { useMessage, useSocketListeners } from "../../hooks/useMessage.js";
@@ -130,6 +130,7 @@ export default function MainPage() {
 
     const handleLogout = () => {
         dispatch(logout());
+        dispatch(clearStore());
         navigate('/');
     };
 

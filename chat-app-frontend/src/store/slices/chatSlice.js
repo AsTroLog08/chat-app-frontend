@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { chatApi } from "../../api/endpoints/chatApi.js";
+import { clearStore } from "./authSlice.js";
 
 // Async Thunk для отримання портфоліо
 
@@ -163,6 +164,11 @@ const chatSlice = createSlice({
       .addCase(modifyChat.rejected, (state, action) => {
         state.loadingChatAction = false;
         state.errorChatAction = action.payload;
+      })
+      .addCase(clearStore, (state) => {
+                // Скидаємо всі дані до початкового стану (крім loading, щоб не викликати flash)
+                state.chats = [];
+                state.error = null;
       });
   },
 });
