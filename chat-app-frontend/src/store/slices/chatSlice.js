@@ -91,6 +91,25 @@ const chatSlice = createSlice({
     setCurrentChat: (state, action) => {
       state.currentChat = action.payload;
     },
+    updateChatLastMessage: (state, action) => {
+      const { chatId, message } = action.payload;
+
+      if (!state.chats) return;
+
+      // Знаходимо індекс потрібного чату
+      const chatIndex = state.chats.findIndex(chat => chat._id === chatId);
+      if (chatIndex !== -1) {
+        // Оновлюємо lastMessage
+        state.chats[chatIndex] = {
+          ...state.chats[chatIndex],
+          lastMessage: message,
+        };
+
+        // Переміщуємо чат наверх списку (опціонально, як у більшості месенджерів)
+        const updatedChat = state.chats.splice(chatIndex, 1)[0];
+        state.chats.unshift(updatedChat);
+      }
+    },
     // Очищення помилок дії
     clearChatActionError: (state) => {
         state.errorChatAction = null;
@@ -173,5 +192,5 @@ const chatSlice = createSlice({
   },
 });
 
-export const { setChats, setCurrentChat, clearChatActionError } = chatSlice.actions;
+export const { setChats, setCurrentChat, clearChatActionError, updateChatLastMessage } = chatSlice.actions;
 export default chatSlice.reducer;

@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { socket } from "../utils/socket.js";
-import { fetchChats } from "../store/slices/chatSlice.js";
-import { addMessage, fetchMessages } from "../store/slices/messageSlice.js";
+import { updateChatLastMessage } from "../store/slices/chatSlice.js";
+import { addMessage } from "../store/slices/messageSlice.js";
 import { addToast } from "../store/slices/toastSlice.js";
 
 export function useMessage() {
@@ -30,6 +30,10 @@ export const useSocketListeners = (currentChatId) => {
                 chatId,
                 message: message.autoResponse
             }));
+            dispatch(updateChatLastMessage({
+                chatId: chatId,
+                message: message.autoResponse.text,
+            }));
             console.log(message.autoResponse)
         const truncatedText = message.autoResponse.text.length > 50 
             ? message.autoResponse.text.substring(0, 20) + '...'
@@ -48,7 +52,7 @@ export const useSocketListeners = (currentChatId) => {
         // 3. Обробник для оновлення списку чатів
         const handleChatListUpdate = () => {
             console.log("Socket.IO: Chat list updated. Refetching chat list...");
-            dispatch(fetchChats(""));
+
         };
 
         socket.on('new_message', handleNewMessage);
